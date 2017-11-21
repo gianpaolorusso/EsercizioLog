@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "312001341111",
+    "firebase_url": "https://esercizio-log.firebaseio.com",
+    "project_id": "esercizio-log",
+    "storage_bucket": "esercizio-log.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312001341111:android:c2420af0671b4c9e",
+        "android_client_info": {
+          "package_name": "com.example.utente5academy.eserciziolog"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "312001341111-evo66ip4tbnjrjdqjh2dngkjek13idds.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkBNlV4Zyjg_0ZX7nyPM8G3_37hYje4h0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

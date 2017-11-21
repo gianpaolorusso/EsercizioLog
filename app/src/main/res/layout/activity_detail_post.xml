@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.utente5academy.eserciziolog.DetailPostActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="25px"
+
+        android:background="@drawable/detailpost_layout">
+
+        <ImageView
+
+            android:id="@+id/immagine"
+            android:layout_width="300px"
+            android:layout_height="350px"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/labelTitolo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/immagine"
+            android:layout_centerHorizontal="true"
+            android:text="TTITOLO" />
+
+        <TextView
+            android:id="@+id/titolo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/labelTitolo"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24px" />
+
+        <TextView
+            android:id="@+id/labelNome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titolo"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:text="NOME"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/nome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/labelNome"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24px" />
+
+        <TextView
+            android:id="@+id/labelData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nome"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:text="DATA"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/labelData"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24px" />
+
+        <TextView
+            android:id="@+id/labelId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/data"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:text="ID POST"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/idpost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/labelId"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24px" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
