@@ -1,53 +1,61 @@
 package com.example.utente5academy.eserciziolog;
 
-import android.Manifest;
-import android.app.Activity;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.utente5academy.eserciziolog.AdapterRecyclerView.AdapterPost;
+import com.example.utente5academy.eserciziolog.AdapterRecyclerView.MyAdapter;
 import com.example.utente5academy.eserciziolog.classi.Comunity;
 import com.example.utente5academy.eserciziolog.classi.DB;
+import com.example.utente5academy.eserciziolog.classi.Interface;
 import com.example.utente5academy.eserciziolog.classi.Post;
-import com.example.utente5academy.eserciziolog.classi.SaveObject;
-import com.example.utente5academy.eserciziolog.classi.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class PostActivity extends AppCompatActivity {
+public class PostActivity extends AppCompatActivity implements Interface {
+
+
+    private String titolo;
+    private AdapterPost adapter;
+    private DB db;
+    private ArrayList<Post> listaPosts;
+    private String idcomunity;
+    private View v;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-
-        String nomecomunity=getIntent().getStringExtra("NomeComunity").toString();
-        this.setTitle(nomecomunity);
-        String idcomunity = getIntent().getStringExtra("IDcomunity").toString();
-        String idutente = getIntent().getStringExtra("IDutente").toString();
-        SaveObject saveObject = new SaveObject();
-        User user = null;
+        idcomunity = getIntent().getStringExtra("IDcomunity");
+        titolo = getIntent().getStringExtra("titolo");
+        Interface delegate = this;
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerpost);
         try {
-           user = saveObject.leggiUtente("utenteloggato", getBaseContext());
+            delegate.adaptgertPostMmethod();
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        Comunity comunity = new Comunity();
-
-        comunity=user.getIdComunity(idcomunity);
-        ArrayList<Post> listapost = comunity.getAllPost();
-        if (listapost.size()>0) {;
-            AdapterPost adapterPost = new AdapterPost(listapost, getBaseContext(),comunity.getId());
-            RecyclerView recyclerView =(RecyclerView) findViewById(R.id.recyclerpost);
-            recyclerView.setAdapter(adapterPost);
-        } else {
-            Toast.makeText(getBaseContext(), "Nessuna post", Toast.LENGTH_SHORT).show();
-        }
         }
     }
+
+
+    @Override
+    public void myadaptgetrmethod() throws IOException {
+
+    }
+
+    @Override
+    public void adaptgertPostMmethod() throws IOException {
+        AdapterPost adapterPost=db.PostAdapater(idcomunity);
+        if (adapterPost!=null) {
+            recyclerView.setAdapter(adapterPost);
+        }
+        else
+            Toast.makeText(getBaseContext(),"nessun post",Toast.LENGTH_SHORT).show();
+    }
+}

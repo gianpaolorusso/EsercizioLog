@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/immagine"
             android:layout_centerHorizontal="true"
-            android:text="TTITOLO" />
+            android:text="TITOLO" />
 
         <TextView
             android:id="@+id/titolo"

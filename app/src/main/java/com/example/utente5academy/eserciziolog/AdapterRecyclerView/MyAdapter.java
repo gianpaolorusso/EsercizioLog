@@ -1,37 +1,29 @@
 package com.example.utente5academy.eserciziolog.AdapterRecyclerView;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.utente5academy.eserciziolog.ListaComunity;
-import com.example.utente5academy.eserciziolog.PostActivity;
 import com.example.utente5academy.eserciziolog.R;
 import com.example.utente5academy.eserciziolog.classi.Comunity;
-import com.example.utente5academy.eserciziolog.classi.DB;
-import com.example.utente5academy.eserciziolog.classi.Post;
-import com.example.utente5academy.eserciziolog.classi.SaveObject;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
-import static android.support.v4.content.ContextCompat.startActivity;
 
 /**
  * Created by utente5.academy on 13/11/2017.
  */
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
-    private ArrayList<String> listaComunity;
+    private ArrayList<Comunity> listaComunity;
+    private Context context;
+    private Comunity comunity;
 
-    public MyAdapter(ArrayList<String> C) {
+    public MyAdapter(ArrayList<Comunity> C, Context cx) {
         this.listaComunity = C;
+        this.context = cx;
 
     }
 
@@ -44,15 +36,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final MyAdapter.ViewHolder holder, int position) {
-        String nomeComunity = this.listaComunity.get(position);
-        holder.com.setText(nomeComunity);
-      /*  final ViewClick click = new ViewClick(this.context, comunity.getId(),this.idutente,nomeComunity);
+
+        comunity = this.listaComunity.get(position);
+        holder.com.setText(comunity.getNome());
+        final ViewClick click = new ViewClick(this.context, comunity.getId(), comunity.getNome());
         holder.com.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 click.onClick(holder.itemView);
             }
-        });*/
+        });
 
     }
 

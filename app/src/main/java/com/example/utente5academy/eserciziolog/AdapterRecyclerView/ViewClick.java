@@ -5,9 +5,7 @@ import android.content.Intent;
 import android.view.View;
 
 import com.example.utente5academy.eserciziolog.DetailPostActivity;
-import com.example.utente5academy.eserciziolog.ListaComunity;
 import com.example.utente5academy.eserciziolog.PostActivity;
-import com.example.utente5academy.eserciziolog.classi.SaveObject;
 
 import static android.support.v4.content.ContextCompat.startActivity;
 
@@ -17,37 +15,32 @@ import static android.support.v4.content.ContextCompat.startActivity;
 
 public class ViewClick implements View.OnClickListener {
     private String idcomunity;
-    private Context context ;
-    private  String idutente;
-    private String NomeComunity;
+    private Context context;
+    private String nomecomunity;
 
 
     @Override
     public void onClick(View v) {
 
-        Intent i = new Intent(context,PostActivity.class);
-        i.putExtra("IDcomunity",this.idcomunity);
-        i.putExtra("IDutente",idutente);
-        i.putExtra("NomeComunity",NomeComunity);
-
-        startActivity(context,i,null);
+        Intent i = new Intent(context, PostActivity.class);
+        i.putExtra("titolo", nomecomunity);
+        i.putExtra("IDcomunity", idcomunity);
+        startActivity(context, i, null);
     }
 
-    public ViewClick(Context context, String idcomunity,String idutente,String comunity) {
+    public ViewClick(Context context, String idcomunity, String nome) {
         this.context = context;
-        this.idcomunity= idcomunity;
-        this.idutente=idutente;
-        this.NomeComunity=comunity;
+        this.nomecomunity = nome;
+        this.idcomunity = idcomunity;
+    }
 
+    public ViewClick(Context context) {
+        this.context = context;
     }
-    public ViewClick(Context context){
-        this.context=context;
-    }
-    public void clickCardView(View v,String idPost,String idcomunity)
-    {
-        Intent i = new Intent(context,DetailPostActivity.class);
-        i.putExtra("idPost",idPost);
-        i.putExtra("idComunity",idcomunity);
-        startActivity(context,i,null);
+
+    public void clickCardView(View v, String idPost) {
+        Intent i = new Intent(context, DetailPostActivity.class);
+        i.putExtra("idPost", idPost);
+        startActivity(context, i, null);
     }
 }

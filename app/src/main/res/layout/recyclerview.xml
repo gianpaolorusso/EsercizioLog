@@ -7,6 +7,8 @@
     android:layout_margin="7dp">
 
     <Button
+        android:textColorHighlight="@color/colorAccent"
+        android:textSize="43px"
         android:id="@+id/comunity"
         android:layout_width="match_parent"
         android:layout_height="150px"
