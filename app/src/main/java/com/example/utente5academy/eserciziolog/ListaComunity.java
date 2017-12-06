@@ -1,9 +1,9 @@
 package com.example.utente5academy.eserciziolog;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
@@ -13,7 +13,6 @@ import com.example.utente5academy.eserciziolog.classi.Comunity;
 import com.example.utente5academy.eserciziolog.classi.DB;
 import com.example.utente5academy.eserciziolog.classi.Interface;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ListaComunity extends AppCompatActivity implements Interface {
@@ -43,7 +42,6 @@ public class ListaComunity extends AppCompatActivity implements Interface {
                     @Override
                     public void run() {
                         refreshLayout.setRefreshing(false);
-
                         if (adapter != null) {
                             recyclerView.setAdapter(adapter);
                         } else
@@ -66,6 +64,15 @@ public class ListaComunity extends AppCompatActivity implements Interface {
         } else
             Toast.makeText(getBaseContext(), "Nessuna comunity", Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        try {
+            this.finalize();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
     }
 
     @Override

@@ -1,14 +1,10 @@
 package com.example.utente5academy.eserciziolog.classi;
 
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.support.v4.app.NotificationCompatSideChannelService;
-import android.support.v7.widget.RecyclerView;
-import android.telecom.Call;
-import android.view.View;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,23 +12,17 @@ import com.example.utente5academy.eserciziolog.AdapterRecyclerView.AdapterPost;
 import com.example.utente5academy.eserciziolog.AdapterRecyclerView.MyAdapter;
 import com.example.utente5academy.eserciziolog.ErrorActivity;
 import com.example.utente5academy.eserciziolog.ListaComunity;
-import com.example.utente5academy.eserciziolog.MainActivity;
-import com.example.utente5academy.eserciziolog.PostActivity;
-import com.example.utente5academy.eserciziolog.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.util.ArrayList;
-import java.util.EmptyStackException;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Callback;
 import okhttp3.FormBody;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -82,13 +72,15 @@ public class DB {
                 try {
                     jsonArray = new JSONArray(response.body().string());
                     jsonObject = (JSONObject) jsonArray.get(0);
+                    call.cancel();
 
 
                     if (jsonObject.getString("username").toString().equals(username)) {
                         if (jsonObject.getString("password").toString().equals(password)) {
                             trovato = true;
-
-                            call.cancel();
+                            SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(c);
+                            SharedPreferences.Editor editor=preferences.edit();
+                            editor.putString("user",username);
                             intent = new Intent(c, ListaComunity.class);
                             intent.putExtra("username", username);
                             PendingIntent pendingIntent = PendingIntent.getActivity(c, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
