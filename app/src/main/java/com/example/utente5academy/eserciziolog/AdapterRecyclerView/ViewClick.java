@@ -23,8 +23,8 @@ public class ViewClick implements View.OnClickListener {
     public void onClick(View v) {
 
         Intent i = new Intent(context, PostActivity.class);
-        i.putExtra("titolo", nomecomunity);
-        i.putExtra("IDcomunity", idcomunity);
+        i.putExtra("titolo", this.nomecomunity);
+        i.putExtra("IDcomunity", this.idcomunity);
         startActivity(context, i, null);
     }
 
@@ -39,8 +39,9 @@ public class ViewClick implements View.OnClickListener {
     }
 
     public void clickCardView(View v, String idPost) {
-        Intent i = new Intent(context, DetailPostActivity.class);
+        Intent i = new Intent(v.getContext(), DetailPostActivity.class);
         i.putExtra("idPost", idPost);
         startActivity(context, i, null);
     }
+
 }

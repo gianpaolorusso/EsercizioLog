@@ -4,25 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.utente5academy.eserciziolog.PostActivity"
-    android:layout_centerHorizontal="true">
+    android:layout_centerHorizontal="true"
+    tools:context="com.example.utente5academy.eserciziolog.PostActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerpost"
-        android:layout_centerHorizontal="true"
+    <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager=" android.support.v7.widget.LinearLayoutManager">
+        android:id="@+id/swipe"
+        android:layout_height="wrap_content">
 
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerpost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            app:layoutManager=" android.support.v7.widget.LinearLayoutManager">
 
+        </android.support.v7.widget.RecyclerView>
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
     <android.support.design.widget.FloatingActionButton
-        android:layout_marginBottom="50px"
-        android:layout_marginRight="50px"
-        android:layout_width="350px"
-        android:layout_height="350px"
-        android:id="@+id/floatingnutton"
-        android:layout_alignBottom="@id/recyclerpost"
-        android:layout_alignRight="@+id/recyclerpost"
-        />
+        android:id="@+id/floatingnbutton"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+      android:layout_margin="30dp"/>
 </RelativeLayout>

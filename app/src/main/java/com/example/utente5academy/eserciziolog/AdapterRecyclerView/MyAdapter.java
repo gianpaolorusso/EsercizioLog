@@ -19,7 +19,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     private ArrayList<Comunity> listaComunity;
     private Context context;
-    private Comunity comunity;
 
     public MyAdapter(ArrayList<Comunity> C, Context cx) {
         this.listaComunity = C;
@@ -37,7 +36,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final MyAdapter.ViewHolder holder, int position) {
 
-        comunity = this.listaComunity.get(position);
+        Comunity comunity= this.listaComunity.get(position);
         holder.com.setText(comunity.getNome());
         final ViewClick click = new ViewClick(this.context, comunity.getId(), comunity.getNome());
         holder.com.setOnClickListener(new View.OnClickListener() {

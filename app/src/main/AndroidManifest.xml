@@ -18,11 +18,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ListaComunity"></activity>
+        <activity android:name=".ListaComunity" />
         <activity android:name=".PostActivity" />
         <activity android:name=".DetailPostActivity" />
-        <activity android:name=".classi.HomeActivity"></activity>
-        <activity android:name=".ErrorActivity"></activity>
+        <activity android:name=".classi.HomeActivity" />
+        <activity android:name=".ErrorActivity" />
+        <activity android:name=".PublicPost"></activity>
     </application>
 
 </manifest>
