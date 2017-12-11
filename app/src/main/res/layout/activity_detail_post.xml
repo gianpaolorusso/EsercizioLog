@@ -4,32 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.utente5academy.eserciziolog.DetailPostActivity">
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:scrollbarStyle="insideInset"
+    android:scrollbarSize="10px"
+    android:scrollbars="vertical"
+    android:orientation="vertical"
+    android:visibility="visible"
+    tools:context="com.example.utente5academy.eserciziolog.DetailPostActivity"
+    tools:scrollbarAlwaysDrawVerticalTrack="?android:attr/windowOverscan">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/schedaDettagli"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_margin="25px"
-
         android:background="@drawable/detailpost_layout">
 
         <ImageView
 
             android:id="@+id/immagine"
-            android:layout_width="300px"
-            android:layout_height="350px"
+            android:layout_width="170dp"
+            android:layout_height="110dp"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="4dp"
             android:layout_marginTop="4dp" />
 
         <TextView
-            android:textColor="@color/colorPrimary"
             android:id="@+id/labelTitolo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/immagine"
             android:layout_centerHorizontal="true"
-            android:text="TITOLO" />
+            android:text="TITOLO"
+            android:textColor="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/titolo"
@@ -37,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/labelTitolo"
             android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:textColor="@color/colorPrimary"
             android:textSize="24px" />
 
@@ -47,8 +55,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/titolo"
             android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
-            android:text="NOME"
+            android:layout_margin="5dp"
+            android:text="TESTO"
             android:textColor="@color/colorPrimary" />
 
         <TextView
@@ -57,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/labelNome"
             android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:textColor="@color/colorPrimary"
             android:textSize="24px" />
 
@@ -67,39 +75,51 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/nome"
             android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:text="DATA"
             android:textColor="@color/colorPrimary" />
 
         <TextView
-            android:id="@+id/data"
+            android:id="@+id/txdata"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/labelData"
             android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:textColor="@color/colorPrimary"
             android:textSize="24px" />
 
-        <TextView
-            android:id="@+id/labelId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/data"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
-            android:text="ID POST"
-            android:textColor="@color/colorPrimary" />
+    </RelativeLayout>
 
-        <TextView
-            android:id="@+id/idpost"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listaCommenti"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/schedaDettagli"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/listaCommenti"
+        android:layout_centerHorizontal="true"
+        android:gravity="center">
+
+        <EditText
+            android:id="@+id/testoCommento"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:hint="commenta..." />
+
+        <Button
+            android:id="@+id/pubblicaCommento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/labelId"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="10dp"
-            android:textColor="@color/colorPrimary"
-            android:textSize="24px" />
+            android:layout_below="@id/testoCommento"
+            android:text="Commenta" />
 
     </RelativeLayout>
 

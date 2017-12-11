@@ -4,11 +4,13 @@ import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.app.NotificationCompatSideChannelService;
 import android.support.v7.widget.RecyclerView;
 import android.telecom.Call;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +20,7 @@ import com.example.utente5academy.eserciziolog.ErrorActivity;
 import com.example.utente5academy.eserciziolog.ListaComunity;
 import com.example.utente5academy.eserciziolog.MainActivity;
 import com.example.utente5academy.eserciziolog.PostActivity;
+import com.example.utente5academy.eserciziolog.PublicPost;
 import com.example.utente5academy.eserciziolog.R;
 
 import org.json.JSONArray;
@@ -46,20 +49,16 @@ import static android.widget.Toast.LENGTH_LONG;
 public class DB {
 
     private Context c;
-    private boolean trovato = false;
+    private Post post = null;
 
     public DB(Context c) {
 
         this.c = c;
     }
 
-    Intent intent;
 
     public void logIn(final String username, final String password) {
-        final OkHttpClient client = new OkHttpClient.Builder()
-                .readTimeout(6, TimeUnit.SECONDS)
-                .retryOnConnectionFailure(true)
-                .connectTimeout(5, TimeUnit.SECONDS).build();
+        final OkHttpClient client = getClient();
         RequestBody body = new FormBody.Builder()
                 .add("username", username)
                 .build();
@@ -86,14 +85,13 @@ public class DB {
 
                     if (jsonObject.getString("username").toString().equals(username)) {
                         if (jsonObject.getString("password").toString().equals(password)) {
-                            trovato = true;
-
                             call.cancel();
-                            intent = new Intent(c, ListaComunity.class);
+                            Intent intent = new Intent(c, ListaComunity.class);
                             intent.putExtra("username", username);
                             PendingIntent pendingIntent = PendingIntent.getActivity(c, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                             try {
                                 pendingIntent.send();
+
                             } catch (PendingIntent.CanceledException e) {
                                 e.printStackTrace();
                             }
@@ -111,20 +109,11 @@ public class DB {
         });
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-
-    }
 
     public void existUsername(String username, String password) {
         final String us = username;
         final String pass = password;
-
-        final OkHttpClient client = new OkHttpClient.Builder()
-                .readTimeout(6, TimeUnit.SECONDS)
-                .readTimeout(5, TimeUnit.SECONDS)
-                .connectTimeout(5, TimeUnit.SECONDS).build();
+        final OkHttpClient client = getClient();
         RequestBody body = new FormBody.Builder()
                 .add("username", us)
                 .build();
@@ -156,21 +145,12 @@ public class DB {
 
             }
 
-            @Override
-            protected void finalize() throws Throwable {
-                Intent i = new Intent(c, ErrorActivity.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(c, 1, i, PendingIntent.FLAG_UPDATE_CURRENT);
-                pendingIntent.send();
-            }
         });
     }
 
     public ArrayList<Comunity> listComunity(String username) {
         final ArrayList<Comunity> lista = new ArrayList<>();
-        final OkHttpClient client = new OkHttpClient.Builder()
-                .retryOnConnectionFailure(true)
-                .readTimeout(6, TimeUnit.SECONDS)
-                .connectTimeout(5, TimeUnit.SECONDS).build();
+        final OkHttpClient client = getClient();
         RequestBody body = new FormBody.Builder()
                 .add("username", username)
                 .build();
@@ -206,21 +186,14 @@ public class DB {
                 } catch (Throwable throwable) {
                     throwable.printStackTrace();
                 }
-
-
             }
-
-
         });
         return lista;
     }
 
     public ArrayList<Post> getListPost(String idcomunity) throws IOException {
         final ArrayList<Post> listaPost = new ArrayList<>();
-        final OkHttpClient client = new OkHttpClient.Builder()
-                .readTimeout(10, TimeUnit.SECONDS)
-                .retryOnConnectionFailure(true)
-                .connectTimeout(10, TimeUnit.SECONDS).build();
+        final OkHttpClient client = getClient();
         RequestBody body = new FormBody.Builder()
                 .add("idcomunity", idcomunity)
                 .build();
@@ -251,10 +224,6 @@ public class DB {
                         listaPost.add(post);
                     }
 
-
-                    client.cache().close();
-                    client.cache().delete();
-                    call.cancel();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -264,12 +233,77 @@ public class DB {
 
     }
 
-    public void getPost(String idPost, final TextView titolo, final TextView data,
-                        final TextView id, final TextView nome) {
-        final Post post = new Post();
-        final OkHttpClient client = new OkHttpClient.Builder()
-                .readTimeout(2, TimeUnit.SECONDS)
-                .connectTimeout(2, TimeUnit.SECONDS).build();
+    public void comment(String testo, String data, String username, String idpost) {
+        OkHttpClient client = getClient();
+        RequestBody body = new FormBody.Builder()
+                .add("testo", testo)
+                .add("data", data)
+                .add("nome", username)
+                .add("idpost", idpost)
+                .build();
+        final Request request = new Request.Builder()
+                .post(body)
+                .url("http://192.168.43.126/php/publicComment.php")
+                .build();
+        okhttp3.Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(okhttp3.Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(okhttp3.Call call, Response response) throws IOException {
+                response.close();
+            }
+        });
+
+
+    }
+
+    public ArrayList<Commento> getCommentList(String idpost) {
+        final ArrayList<Commento> list = new ArrayList<>();
+        OkHttpClient client = getClient();
+        RequestBody body = new FormBody.Builder()
+                .add("idpost", idpost)
+                .build();
+        final Request request = new Request.Builder()
+                .post(body)
+                .url("http://192.168.43.126/php/getComments.php")
+                .build();
+        okhttp3.Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(okhttp3.Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(okhttp3.Call call, Response response) throws IOException {
+                JSONArray jsonArray = null;
+                JSONObject jsonObject = null;
+                try {
+                    jsonArray = new JSONArray(response.body().string());
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        jsonObject = (JSONObject) jsonArray.get(i);
+                        Commento commento = new Commento();
+                        commento.setData(jsonObject.getString("giorno").toString());
+                        commento.setTesto(jsonObject.getString("testo").toString());
+                        commento.setUser_pubblicazione(jsonObject.getString("utente").toString());
+                        list.add(commento);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        return list;
+    }
+
+    public void getPost(final String idPost, final TextView titolo, final TextView nome,
+                        final TextView data, final ImageView image) {
+        final OkHttpClient client = getClient();
         RequestBody body = new FormBody.Builder()
                 .add("idpost", idPost)
                 .build();
@@ -289,17 +323,13 @@ public class DB {
                 JSONObject jsonObject = null;
                 JSONArray jsonArray = null;
                 try {
-
+                    post = new Post();
                     jsonArray = new JSONArray(response.body().string());
                     jsonObject = (JSONObject) jsonArray.get(0);
-                    nome.setText(jsonObject.getString("nome"));
-                    id.setText(jsonObject.getString("id"));
-                    data.setText(jsonObject.getString("giorno"));
                     titolo.setText(jsonObject.getString("titolo"));
-
-                    call.cancel();
-                    //  response.cacheResponse().close();
-                    client.dispatcher().cancelAll();
+                    image.setImageResource(R.drawable.immagine);
+                    nome.setText(jsonObject.getString("nome"));
+                    data.setText(jsonObject.getString("giorno"));
                 } catch (JSONException e1) {
                     e1.printStackTrace();
                 }
@@ -307,10 +337,8 @@ public class DB {
         });
     }
 
-    public void insertPost(String titolo, String data, String testo, String idcoomunity) throws IOException {
-        final OkHttpClient client = new OkHttpClient.Builder()
-                .readTimeout(2, TimeUnit.SECONDS)
-                .connectTimeout(2, TimeUnit.SECONDS).build();
+    public void insertPost(String titolo, String data, String testo, final String idcoomunity) throws IOException {
+        final OkHttpClient client = getClient();
         RequestBody body = new FormBody.Builder()
                 .add("idcomunity", idcoomunity)
                 .add("data", data)
@@ -330,7 +358,14 @@ public class DB {
 
             @Override
             public void onResponse(okhttp3.Call call, Response response) throws IOException {
-
+                Intent i = new Intent(c, PostActivity.class);
+                i.putExtra("idcomunity", idcoomunity);
+                PendingIntent pendingIntent = PendingIntent.getActivity(c, 1, i, PendingIntent.FLAG_UPDATE_CURRENT);
+                try {
+                    pendingIntent.send();
+                } catch (PendingIntent.CanceledException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -341,11 +376,20 @@ public class DB {
         return adapter;
     }
 
-    public ArrayList<Post> PostAdapater(String idComunity, Context cx) throws IOException {
+    public AdapterPost PostAdapater(String idComunity) throws IOException {
+
         ArrayList<Post> lista = getListPost(idComunity);
-        AdapterPost adapterPost = new AdapterPost(lista, cx);
-        return lista;
+        AdapterPost adapterPost = new AdapterPost(lista, c);
+        return adapterPost;
 
     }
 
+    private OkHttpClient getClient() {
+        OkHttpClient client = new OkHttpClient.Builder()
+                .readTimeout(6, TimeUnit.SECONDS)
+                .readTimeout(5, TimeUnit.SECONDS)
+                .connectTimeout(5, TimeUnit.SECONDS).build();
+        return client;
+
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.utente5academy.eserciziolog;
 
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,10 @@ public class ListaComunity extends AppCompatActivity implements Interface {
         setContentView(R.layout.activity_lista_comunity);
         final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         username = getIntent().getStringExtra("username");
+        SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("username", username);
+        editor.commit();
         db = new DB(getBaseContext());
         lista = db.listComunity(username);
         final Interface delegate = this;
@@ -50,7 +55,7 @@ public class ListaComunity extends AppCompatActivity implements Interface {
                             Toast.makeText(getBaseContext(), "Nessuna comunity", Toast.LENGTH_SHORT).show();
 
                     }
-                },3000);
+                }, 3000);
             }
         });
 
@@ -59,7 +64,6 @@ public class ListaComunity extends AppCompatActivity implements Interface {
 
     @Override
     public void myadaptgetrmethod() {
-
         MyAdapter adapter = db.getAdapter(username);
         if (adapter != null) {
             recyclerView.setAdapter(adapter);
@@ -69,6 +73,17 @@ public class ListaComunity extends AppCompatActivity implements Interface {
     }
 
     @Override
-    public void adaptgertPostMethod() {
+    public void adaptgetPostMethod() {
+
+    }
+
+    @Override
+    public void CommentList() {
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        this.finishAffinity();
     }
 }

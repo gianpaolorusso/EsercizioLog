@@ -1,5 +1,6 @@
 package com.example.utente5academy.eserciziolog.AdapterRecyclerView;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -17,6 +18,8 @@ public class ViewClick implements View.OnClickListener {
     private String idcomunity;
     private Context context;
     private String nomecomunity;
+    private Context contextPost;
+    private String username;
 
 
     @Override
@@ -25,7 +28,12 @@ public class ViewClick implements View.OnClickListener {
         Intent i = new Intent(context, PostActivity.class);
         i.putExtra("titolo", this.nomecomunity);
         i.putExtra("IDcomunity", this.idcomunity);
-        startActivity(context, i, null);
+        PendingIntent pendingIntent=PendingIntent.getActivity(context,1,i,PendingIntent.FLAG_UPDATE_CURRENT);
+        try {
+            pendingIntent.send();
+        } catch (PendingIntent.CanceledException e) {
+            e.printStackTrace();
+        }
     }
 
     public ViewClick(Context context, String idcomunity, String nome) {
@@ -35,13 +43,20 @@ public class ViewClick implements View.OnClickListener {
     }
 
     public ViewClick(Context context) {
-        this.context = context;
+        this.contextPost = context;
     }
 
-    public void clickCardView(View v, String idPost) {
-        Intent i = new Intent(v.getContext(), DetailPostActivity.class);
+    public void clickCardView(View v, String idPost,String titolo) {
+        Intent i = new Intent(contextPost, DetailPostActivity.class);
         i.putExtra("idPost", idPost);
-        startActivity(context, i, null);
+        i.putExtra("titolo",titolo);
+        PendingIntent pendingIntent=PendingIntent.getActivity(contextPost,1,i,PendingIntent.FLAG_UPDATE_CURRENT);
+        try {
+            pendingIntent.send();
+        } catch (PendingIntent.CanceledException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

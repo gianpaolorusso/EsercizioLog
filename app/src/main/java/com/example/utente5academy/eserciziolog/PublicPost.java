@@ -30,8 +30,12 @@ public class PublicPost extends AppCompatActivity {
         setContentView(R.layout.activity_public_post);
         final String idcomunity = getIntent().getStringExtra("idcomunity");
         titolo = (EditText) findViewById(R.id.titolo);
+        GregorianCalendar calendar = new GregorianCalendar();
+        final int giorno = calendar.get(Calendar.DATE);
+        final int mese = calendar.get(Calendar.MONTH) + 1;
+        final int anno = calendar.get(Calendar.YEAR);
         testo = (EditText) findViewById(R.id.testo);
-        db = new DB(getApplicationContext());
+        db = new DB(getBaseContext());
         pubblic = (Button) findViewById(R.id.pubblica);
         pubblic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,19 +45,10 @@ public class PublicPost extends AppCompatActivity {
                 } else {
                     String title = titolo.getText().toString();
                     String nome = testo.getText().toString();
-                    GregorianCalendar calendar = new GregorianCalendar();
-                    int giorno = calendar.get(Calendar.DATE);
-                    int mese = calendar.get(Calendar.MONTH) + 1;
-                    int anno = calendar.get(Calendar.YEAR);
                     String data = String.valueOf(anno) + "-" + String.valueOf(mese) + "-" + String.valueOf(giorno);
                     try {
                         db.insertPost(title, data, nome, idcomunity);
-                        Intent i = new Intent(PublicPost.this, PostActivity.class);
-                        PendingIntent pendingIntent=PendingIntent.getActivity(getBaseContext(),1,i,PendingIntent.FLAG_UPDATE_CURRENT);
-                   pendingIntent.send();
                     } catch (IOException e) {
-                        e.printStackTrace();
-                    } catch (PendingIntent.CanceledException e) {
                         e.printStackTrace();
                     }
 

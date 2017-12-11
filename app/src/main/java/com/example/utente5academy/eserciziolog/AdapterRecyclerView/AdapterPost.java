@@ -26,8 +26,6 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.ViewHolder> {
     public AdapterPost(ArrayList<Post> list, Context c) {
         this.listaPost = list;
         this.context = c;
-
-
     }
 
     @Override
@@ -38,7 +36,6 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final AdapterPost.ViewHolder holder, int position) {
-
         final Post post = this.listaPost.get(position);
         holder.titolo.setText(post.getTitolo());
         holder.data.setText(post.getData());
@@ -49,7 +46,7 @@ public class AdapterPost extends RecyclerView.Adapter<AdapterPost.ViewHolder> {
             @Override
             public void onClick(View v) {
 
-                click.clickCardView(holder.itemView, post.getId());
+                click.clickCardView(holder.itemView, post.getId(), post.getTitolo());
             }
         });
 

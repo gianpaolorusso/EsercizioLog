@@ -14,34 +14,42 @@ import android.widget.Toast;
 
 import com.example.utente5academy.eserciziolog.AdapterRecyclerView.AdapterPost;
 import com.example.utente5academy.eserciziolog.classi.DB;
+import com.example.utente5academy.eserciziolog.classi.Interface;
 import com.example.utente5academy.eserciziolog.classi.Post;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class PostActivity extends AppCompatActivity {
+public class PostActivity extends AppCompatActivity implements Interface {
 
     private SwipeRefreshLayout refreshLayout;
     private String titolo;
-    private AdapterPost adapter;
     private DB db;
-    private ArrayList<Post> listaPosts;
+    private AdapterPost adapter;
     private String idcomunity;
-    private View v;
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
+    private Interface delegate;
+    private String username;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-        idcomunity = getIntent().getStringExtra("IDcomunity");
-        titolo = getIntent().getStringExtra("titolo");
+        if (getIntent().getStringExtra("IDcomunity") != null) {
+            idcomunity = getIntent().getStringExtra("IDcomunity");
+            titolo = getIntent().getStringExtra("titolo");
+            username = getIntent().getStringExtra("username");
+        }
+
+        this.setTitle(titolo);
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe);
         db = new DB(getBaseContext());
+        delegate = this;
         recyclerView = (RecyclerView) findViewById(R.id.recyclerpost);
         recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+        delegate.adaptgetPostMethod();
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingnbutton);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,40 +68,53 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 refreshLayout.setRefreshing(true);
-
-                try {
-                    listaPosts = db.PostAdapater(idcomunity, getBaseContext());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                delegate.adaptgetPostMethod();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         refreshLayout.setRefreshing(false);
-                        if (listaPosts.size()>0) {
-                            AdapterPost adapter=new AdapterPost(listaPosts,getBaseContext());
-                            recyclerView.setAdapter(adapter);
-                        } else
-                            Toast.makeText(getBaseContext(), "nessun post", Toast.LENGTH_SHORT).show();
+
+
                     }
-                }, 5000);
+                }, 3000);
             }
         });
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        idcomunity = getIntent().getStringExtra("IDcomunity");
+        delegate.adaptgetPostMethod();
+    }
+
+    @Override
+    public void myadaptgetrmethod() {
+
+    }
+
+    @Override
+    public void adaptgetPostMethod() {
+
         try {
-            adaptgertPostMmethod();
+            adapter = db.PostAdapater(idcomunity);
+            Thread.sleep(100);
+            if (adapter.getItemCount() > 0) {
+                recyclerView.setAdapter(adapter);
+            } else
+                Toast.makeText(getBaseContext(), "nessun post", Toast.LENGTH_SHORT).show();
+
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void adaptgertPostMmethod() throws IOException {
-        ArrayList<Post> adapterPost = db.PostAdapater(idcomunity, getBaseContext());
-        if (adapterPost.size()>0) {
-            AdapterPost adapter=new AdapterPost(adapterPost,getBaseContext());
-            recyclerView.setAdapter(adapter);
-        } else
-            Toast.makeText(getBaseContext(), "nessun post", Toast.LENGTH_SHORT).show();
+    @Override
+    public void CommentList() {
+
     }
 
 
