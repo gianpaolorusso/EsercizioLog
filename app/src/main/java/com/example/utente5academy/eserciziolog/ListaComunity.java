@@ -13,6 +13,9 @@ import com.example.utente5academy.eserciziolog.AdapterRecyclerView.MyAdapter;
 import com.example.utente5academy.eserciziolog.classi.Comunity;
 import com.example.utente5academy.eserciziolog.classi.DB;
 import com.example.utente5academy.eserciziolog.classi.Interface;
+import com.example.utente5academy.eserciziolog.classi.RegistrationToken;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,11 +31,9 @@ public class ListaComunity extends AppCompatActivity implements Interface {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_comunity);
         final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
-        username = getIntent().getStringExtra("username");
         SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("username", username);
-        editor.commit();
+        username =preferences.getString("username","vuoto");
+
         db = new DB(getBaseContext());
         lista = db.listComunity(username);
         final Interface delegate = this;

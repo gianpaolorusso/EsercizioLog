@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbarAlwaysDrawVerticalTrack="true"
-    android:scrollbarStyle="insideInset"
-    android:scrollbarSize="10px"
-    android:scrollbars="vertical"
-    android:orientation="vertical"
-    android:visibility="visible"
-    tools:context="com.example.utente5academy.eserciziolog.DetailPostActivity"
-    tools:scrollbarAlwaysDrawVerticalTrack="?android:attr/windowOverscan">
+    tools:context="com.example.utente5academy.eserciziolog.DetailPostActivity">
 
     <RelativeLayout
         android:id="@+id/schedaDettagli"
@@ -94,7 +88,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/listaCommenti"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="80dp"
         android:layout_below="@+id/schedaDettagli"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp">
@@ -109,12 +103,15 @@
         android:gravity="center">
 
         <EditText
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:id="@+id/testoCommento"
-            android:layout_width="100dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="commenta..." />
 
         <Button
+            android:layout_centerHorizontal="true"
             android:id="@+id/pubblicaCommento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

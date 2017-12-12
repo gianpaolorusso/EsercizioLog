@@ -47,7 +47,7 @@ public class PublicPost extends AppCompatActivity {
                     String nome = testo.getText().toString();
                     String data = String.valueOf(anno) + "-" + String.valueOf(mese) + "-" + String.valueOf(giorno);
                     try {
-                        db.insertPost(title, data, nome, idcomunity);
+                        db.insertPost(getBaseContext(),title, data, nome, idcomunity);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

@@ -337,7 +337,7 @@ public class DB {
         });
     }
 
-    public void insertPost(String titolo, String data, String testo, final String idcoomunity) throws IOException {
+    public void insertPost(final Context cx, String titolo, String data, String testo, final String idcoomunity) throws IOException {
         final OkHttpClient client = getClient();
         RequestBody body = new FormBody.Builder()
                 .add("idcomunity", idcoomunity)
@@ -358,9 +358,10 @@ public class DB {
 
             @Override
             public void onResponse(okhttp3.Call call, Response response) throws IOException {
-                Intent i = new Intent(c, PostActivity.class);
-                i.putExtra("idcomunity", idcoomunity);
-                PendingIntent pendingIntent = PendingIntent.getActivity(c, 1, i, PendingIntent.FLAG_UPDATE_CURRENT);
+                Intent i = new Intent(cx, PostActivity.class);
+                i.putExtra("ID" +
+                        "comunity", idcoomunity);
+                PendingIntent pendingIntent = PendingIntent.getActivity(cx, 1, i, PendingIntent.FLAG_UPDATE_CURRENT);
                 try {
                     pendingIntent.send();
                 } catch (PendingIntent.CanceledException e) {

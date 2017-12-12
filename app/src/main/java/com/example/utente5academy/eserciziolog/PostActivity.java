@@ -30,22 +30,18 @@ public class PostActivity extends AppCompatActivity implements Interface {
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
     private Interface delegate;
-    private String username;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-        if (getIntent().getStringExtra("IDcomunity") != null) {
-            idcomunity = getIntent().getStringExtra("IDcomunity");
-            titolo = getIntent().getStringExtra("titolo");
-            username = getIntent().getStringExtra("username");
-        }
-
-        this.setTitle(titolo);
+        idcomunity = getIntent().getStringExtra("IDcomunity");
+        titolo = getIntent().getStringExtra("titolo");
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe);
         db = new DB(getBaseContext());
+        this.setTitle(titolo);
         delegate = this;
         recyclerView = (RecyclerView) findViewById(R.id.recyclerpost);
         recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));

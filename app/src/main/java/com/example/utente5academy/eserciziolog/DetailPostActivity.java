@@ -80,7 +80,13 @@ public class DetailPostActivity extends AppCompatActivity implements Interface {
                     int anno = calendar.get(Calendar.YEAR);
                     String data = String.valueOf(anno) + "-" + String.valueOf(mese) + "-" + String.valueOf(giorno);
                     db.comment(testoCommento.getText().toString(), data, username,idpost);
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     delegate.CommentList();
+                    testoCommento.setText("");
                 }
             }
         });
@@ -113,7 +119,5 @@ public class DetailPostActivity extends AppCompatActivity implements Interface {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-
     }
 }

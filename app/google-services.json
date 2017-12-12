@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "312001341111",
-    "firebase_url": "https://esercizio-log.firebaseio.com",
-    "project_id": "esercizio-log",
-    "storage_bucket": "esercizio-log.appspot.com"
+    "project_number": "1087824430111",
+    "firebase_url": "https://login-4a9a2.firebaseio.com",
+    "project_id": "login-4a9a2",
+    "storage_bucket": "login-4a9a2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:312001341111:android:c2420af0671b4c9e",
+        "mobilesdk_app_id": "1:1087824430111:android:c2420af0671b4c9e",
         "android_client_info": {
           "package_name": "com.example.utente5academy.eserciziolog"
         }
       },
       "oauth_client": [
         {
-          "client_id": "312001341111-evo66ip4tbnjrjdqjh2dngkjek13idds.apps.googleusercontent.com",
+          "client_id": "1087824430111-bgil4jd53u0sl36s8efoish09c3lrl9k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.utente5academy.eserciziolog",
+            "certificate_hash": "84b35cd7940c0852bd0ea1813e10ccb6cdb292a7"
+          }
+        },
+        {
+          "client_id": "1087824430111-hjo3tefr589nfcetn3posb0uhd3qm0pk.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCkBNlV4Zyjg_0ZX7nyPM8G3_37hYje4h0"
+          "current_key": "AIzaSyBYLV783ulX1TYsSrPzbvIJ3TaWZxx6vlE"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1087824430111-hjo3tefr589nfcetn3posb0uhd3qm0pk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
