@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     String user;
                     String pass;
+
                     if (username.getText().toString().equals("")) {
                         Toast.makeText(getBaseContext(), "Inserire l'username", Toast.LENGTH_SHORT).show();
                     } else if
@@ -82,4 +83,5 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
 }
