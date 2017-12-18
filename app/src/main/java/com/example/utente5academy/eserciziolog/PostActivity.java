@@ -2,23 +2,25 @@ package com.example.utente5academy.eserciziolog;
 
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.utente5academy.eserciziolog.AdapterRecyclerView.AdapterPost;
 import com.example.utente5academy.eserciziolog.classi.DB;
 import com.example.utente5academy.eserciziolog.classi.Interface;
-import com.example.utente5academy.eserciziolog.classi.Post;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class PostActivity extends AppCompatActivity implements Interface {
 
@@ -30,7 +32,7 @@ public class PostActivity extends AppCompatActivity implements Interface {
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
     private Interface delegate;
-
+    private SharedPreferences preferences;
 
 
     @Override
@@ -43,6 +45,7 @@ public class PostActivity extends AppCompatActivity implements Interface {
         db = new DB(getBaseContext());
         this.setTitle(titolo);
         delegate = this;
+        preferences=getSharedPreferences("preferences", MODE_PRIVATE);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerpost);
         recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
         delegate.adaptgetPostMethod();
@@ -113,5 +116,31 @@ public class PostActivity extends AppCompatActivity implements Interface {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.layout_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.esci:
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("username", "");
+                editor.commit();
+                editor.apply();
+                Intent intent = new Intent(this, MainActivity.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                try {
+                    pendingIntent.send();
+                } catch (PendingIntent.CanceledException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+        return true;
+    }
 
 }

@@ -7,7 +7,7 @@ import com.example.utente5academy.eserciziolog.AdapterRecyclerView.MyAdapter;
  */
 
 public interface Interface {
-    public void myadaptgetrmethod();
+    public void myadaptgetrmethod() throws InterruptedException;
 
     public void adaptgetPostMethod();
 

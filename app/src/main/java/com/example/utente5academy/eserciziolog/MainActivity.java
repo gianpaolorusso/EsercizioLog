@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
         FirebaseInstanceId.getInstance().getToken();
         FirebaseMessaging.getInstance().subscribeToTopic("push");
         SharedPreferences preferences = getSharedPreferences("preferences", MODE_PRIVATE);
-        String utente = preferences.getString("username", "nessuno");
-        if (utente != "nessuno") {
+        String utente = preferences.getString("username", "");
+        if (!(utente.equals(""))) {
             Intent intent = new Intent(MainActivity.this, ListaComunity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
             try {
@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     String user;
                     String pass;
-
                     if (username.getText().toString().equals("")) {
                         Toast.makeText(getBaseContext(), "Inserire l'username", Toast.LENGTH_SHORT).show();
                     } else if
@@ -72,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
                         user = username.getText().toString();
                         pass = password.getText().toString();
-                        editor.putString("username",user);
+                        editor.putString("username", user);
                         editor.commit();
                         database = new DB(context);
                         database.existUsername(user, pass);
